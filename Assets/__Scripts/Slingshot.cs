@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class Slingshot : MonoBehaviour {
 
-    
-        [Header("Set in Inspector")]
+    static private Slingshot S;                                              // a
+                                                                             // fields set in the Unity Inspector pane
+    [Header("Set in Inspector")]
         public GameObject prefabProjectile;
         public float velocityMult = 8f;                              
 
@@ -20,8 +21,15 @@ public class Slingshot : MonoBehaviour {
         public GameObject projectile;                                     
         public bool aimingMode;                                      
 
-        private Rigidbody projectileRigidbody;    
-    
+        private Rigidbody projectileRigidbody;
+    static public Vector3 LAUNCH_POS
+    {                                        // b
+        get
+        {
+            if (S == null) return Vector3.zero;
+            return S.launchPos;
+        }
+    }
     void Awake() {
         Transform launchPointTrans = transform.Find("LaunchPoint");
         launchPoint = launchPointTrans.gameObject;
@@ -82,7 +90,10 @@ public class Slingshot : MonoBehaviour {
             aimingMode = false;
             projectileRigidbody.isKinematic = false;
             projectileRigidbody.velocity = -mouseDelta * velocityMult;
+            FollowCam.POI = projectile;
             projectile = null;
+            MissionDemolition.ShotFired();                    // a
+            ProjectileLine.S.poi = projectile;                // b
         }
     }
 }
