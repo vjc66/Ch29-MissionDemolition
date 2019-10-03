@@ -5,22 +5,17 @@ using UnityEngine;
 // YOU must implement the Slingshot
 
 public class Slingshot : MonoBehaviour {
-  
-
-// Place class variables here
 
 
-
-    private void Awake()
+    void OnMouseEnter()
     {
-
+        print("Slingshot:OnMouseEnter()");
     }
 
-
-    private void Update()
+    void OnMouseExit()
     {
- 
-
-
+        print("Slingshot:OnMouseExit()");
     }
+
 }
+
